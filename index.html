@@ -357,7 +357,26 @@
   .b-title{font-family:var(--serif);font-weight:500;font-size:1.4rem;line-height:1.18;letter-spacing:-0.01em;margin:10px 0 6px;}
   .span-big .b-title{font-size:1.85rem;}
   .b-desc{font-size:0.95rem;line-height:1.5;opacity:.85;margin:0;}
-  .b-media{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin-top:16px;display:block;background:linear-gradient(135deg,rgba(255,255,255,.30),rgba(255,255,255,.08));}
+  .b-media{
+    width:100%;
+    height:auto;
+    aspect-ratio:16/9;     /* the box shape; keep, change, or remove */
+    object-fit:contain;    /* whole image shown, no cropping */
+    background:#fff;        /* fills the leftover area in white */
+    border-radius:12px;
+    margin-top:16px;
+    display:block;
+  }
+  .b-media-long{
+    width:100%;
+    height:auto;
+    aspect-ratio:32/10;     /* the box shape; keep, change, or remove */
+    object-fit:contain;    /* whole image shown, no cropping */
+    background:#fff;        /* fills the leftover area in white */
+    border-radius:12px;
+    margin-top:16px;
+    display:block;
+  }
   .b-links{margin-top:auto;display:flex;flex-wrap:wrap;gap:16px;padding-top:18px;}
   .b-links a{color:inherit;text-decoration:none;font-size:0.78rem;font-weight:600;letter-spacing:0.04em;border-bottom:1px solid currentColor;padding-bottom:2px;transition:opacity .2s;}
   .b-links a:hover{opacity:.65;}
@@ -471,7 +490,7 @@
           <span class="b-label">Open Source</span>
           <h3 class="b-title">ParaQeet</h3>
           <p class="b-desc">A quantum optimal control toolkit with simple parameter management</p>
-          <div class="b-media" style="background-image:url('https://jugit.fz-juelich.de/pgi-12-external/qfc/paraqeet/-/raw/main/big_logo.png');background-size:cover;background-position:center;"></div>
+          <div class="b-media-long" style="background-image:url('https://jugit.fz-juelich.de/pgi-12-external/qfc/paraqeet/-/raw/main/big_logo.png');background-size:cover;background-position:center;"></div>
           <div class="b-links">
             <a href="https://jugit.fz-juelich.de/pgi-12-external/qfc/paraqeet">Follow on GitLab ↗</a>
             <a href="https://paraqeet.readthedocs.io/en/latest/">Read the Docs ↗</a>
@@ -536,10 +555,10 @@
 
       <!-- EDIT: duplicate a .tl-item block per role -->
       <div class="tl-item">
-        <div class="tl-title">[Your Role / Title] — <span class="tl-org">[Institution / Lab]</span></div>
-        <div class="tl-meta">[Start] – [End] &middot; [City, Country] &middot; [collaboration / department]</div>
+        <div class="tl-title">Doctoral Researcher — <span class="tl-org">PGI-12, Forschungszentum Jülich</span></div>
+        <div class="tl-meta">Sep 2021 – Sep 2026 &middot; Jülich, Germany &middot; <a, href="https://www.fz-juelich.de/en/pgi/pgi-12">PGI-12, Quantum Computing Analytics</a></div>
         <ul class="tl-points">
-          <li>Describe a concrete contribution — the method you built, what it measured, and the conditions it addressed.</li>
+          <li><strong>PhD thesis</strong>: Open-loop quantum control for practical superconducting quantum systems (submitted)</li>
           <li>Quantify a result or outcome (datasets, benchmarks, improvements) where you can.</li>
           <li>Note tools, pipelines, or analyses you implemented (languages, frameworks, statistical methods).</li>
           <li>Mention talks given, papers in preparation, or students you mentored.</li>

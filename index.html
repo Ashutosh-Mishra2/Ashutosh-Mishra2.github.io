@@ -1,20 +1,741 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Ashutosh's Webpage</title>
-    </head>
+<!-- ============================================================= -->
+<!--  EDIT: page title shown in the browser tab                    -->
+<!-- ============================================================= -->
+<title>Dr. Your Name — Research Profile</title>
+<meta name="description" content="Research profile of Dr. Your Name — [subfield] in [department], [University].">
 
-    <body>
+<!-- Fonts: Fraunces (editorial display serif) + Hanken Grotesk (clean body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+     SINGLE-HUE PALETTE (slate-blue) — same color, many shades.
+     Two themes swap by toggling [data-theme] on <html>.
+     ========================================================= */
+  :root[data-theme="light"]{
+    --bg:#f4f6fa;
+    --surface:#ffffff;
+    --surface-2:#eef1f7;
+    --border:#dce2ed;
+    --border-strong:#c7d0e0;
+    --text:#192230;
+    --text-soft:#48536a;
+    --text-faint:#8a93a6;
+    --accent:#2745c4;        /* THE single color — cobalt blue */
+    --accent-strong:#1b318f;
+    --accent-soft:#5e78d6;
+    --accent-wash:rgba(39,69,196,0.07);
+    --shadow:0 18px 44px -22px rgba(25,40,110,0.30);
+    --grain:0.02;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d121b;
+    --surface:#141b27;
+    --surface-2:#1a2330;
+    --border:#28323f;
+    --border-strong:#36424f;
+    --text:#e9eef6;
+    --text-soft:#a6b1c4;
+    --text-faint:#6b768a;
+    --accent:#8aa6f4;        /* lighter shade of the same cobalt */
+    --accent-strong:#b3c5fb;
+    --accent-soft:#6580d4;
+    --accent-wash:rgba(138,166,244,0.12);
+    --shadow:0 22px 50px -24px rgba(0,0,0,0.7);
+    --grain:0.04;
+  }
+
+  :root{
+    --serif:"Fraunces", Georgia, serif;
+    --sans:"Hanken Grotesk", system-ui, sans-serif;
+    --maxw:920px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    transition:background .4s ease, color .4s ease;
+  }
+  /* subtle grain texture for depth */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--grain);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    transition:opacity .4s ease;
+  }
+  ::selection{background:var(--accent);color:var(--surface);}
+
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:1;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(160%) blur(12px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:14px 28px;
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+  }
+  .nav-name{font-family:var(--serif);font-weight:600;font-size:1.08rem;letter-spacing:-0.01em;}
+  .nav-name span{color:var(--accent);}
+  .nav-right{display:flex;align-items:center;gap:8px;}
+  .nav-links{display:flex;gap:24px;list-style:none;margin-right:22px;}
+  .nav-links a{
+    color:var(--text-soft);text-decoration:none;font-size:0.9rem;font-weight:500;
+    position:relative;transition:color .2s;
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;
+    background:var(--accent);transition:width .25s ease;
+  }
+  .nav-links a:hover{color:var(--text);}
+  .nav-links a:hover::after{width:100%;}
+
+  /* theme toggle + mobile button */
+  .icon-btn{
+    display:grid;place-items:center;width:40px;height:40px;border-radius:10px;
+    background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    cursor:pointer;transition:background .2s, border-color .2s, transform .15s;
+  }
+  .icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+  .icon-btn svg{width:19px;height:19px;}
+  .theme-toggle .moon{display:none;}
+  :root[data-theme="dark"] .theme-toggle .sun{display:none;}
+  :root[data-theme="dark"] .theme-toggle .moon{display:block;}
+  .nav-toggle{display:none;}
+
+  /* active section indicator in the top bar */
+  .nav-links a.active{color:var(--accent);}
+  .nav-links a.active::before{
+    content:"";position:absolute;left:-12px;top:50%;width:5px;height:5px;border-radius:50%;
+    background:var(--accent);transform:translate(-50%,-50%);
+    box-shadow:0 0 0 3px var(--accent-wash);
+  }
+  .nav-links a.active::after{width:100%;}
+
+  /* ---------- REVEAL ANIMATION ---------- */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* blue dotted tick (echoes the section labels in your reference) */
+  .tick{display:inline-block;width:42px;height:0;border-top:2px dotted var(--accent);vertical-align:middle;margin-right:12px;transform:translateY(-3px);}
+
+  /* ---------- HERO ---------- */
+  header.hero{padding:74px 0 56px;}
+  .hero-grid{display:grid;grid-template-columns:1fr 220px;gap:48px;align-items:center;}
+  .eyebrow{
+    font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:600;
+    color:var(--accent);margin-bottom:20px;
+  }
+  .hero h1{
+    font-family:var(--serif);font-weight:500;font-size:clamp(2.5rem,6.5vw,3.9rem);
+    line-height:1.04;letter-spacing:-0.025em;margin-bottom:18px;
+  }
+  .hero .role{font-size:1.12rem;color:var(--text-soft);max-width:560px;margin-bottom:6px;}
+  .hero .affil{font-size:1.02rem;color:var(--text-faint);}
+  .hero-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;}
+  .hero-links a{
+    font-size:0.85rem;font-weight:500;color:var(--text);text-decoration:none;
+    padding:9px 16px;border:1px solid var(--border-strong);border-radius:100px;
+    transition:border-color .2s,color .2s,background .2s,transform .15s;
+  }
+  .hero-links a:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-wash);transform:translateY(-2px);}
+
+  /* PHOTO — swap the .photo div for: <img src="me.jpg" alt="..."> */
+  .photo{
+    width:220px;height:260px;border-radius:16px;overflow:hidden;
+    border:1px solid var(--border-strong);background:var(--surface-2);
+    display:grid;place-items:center;box-shadow:var(--shadow);justify-self:center;
+  }
+  .photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .photo .ph-svg{width:62%;height:62%;color:var(--accent-soft);opacity:.8;}
+  .photo .ph-note{position:absolute;}
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    padding:96px 0;border-top:1px solid var(--border);
+    scroll-margin-top:78px;min-height:74vh;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:28px;}
+  .sec-num{font-size:0.74rem;font-weight:700;letter-spacing:0.08em;color:var(--accent);background:var(--accent-wash);border:1px solid var(--border-strong);border-radius:100px;padding:3px 11px;}
+  h2{font-family:var(--serif);font-weight:500;font-size:1.9rem;letter-spacing:-0.02em;}
+  .sec-head .rule{flex:1;height:0;border-top:2px dotted var(--border-strong);}
+
+  .lead{font-size:1.1rem;color:var(--text-soft);max-width:680px;}
+  .lead + .lead{margin-top:15px;}
+  .lead strong{color:var(--text);font-weight:600;}
+
+  /* interests tags */
+  .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
+  .tag{
+    font-size:0.82rem;font-weight:500;padding:7px 15px;border-radius:100px;
+    border:1px solid var(--border-strong);color:var(--text-soft);background:var(--surface);
+    transition:border-color .2s,color .2s,background .2s;
+  }
+  .tag:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-wash);}
+
+  /* publications */
+  .pub{padding:20px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:60px 1fr;gap:18px;}
+  .pub:last-child{border-bottom:none;}
+  .pub-year{font-size:0.85rem;font-weight:600;color:var(--accent);padding-top:3px;}
+  .pub-title{font-family:var(--serif);font-weight:500;font-size:1.18rem;line-height:1.32;letter-spacing:-0.01em;}
+  .pub-authors{font-size:0.92rem;color:var(--text-soft);margin-top:6px;}
+  .pub-authors strong{color:var(--text);font-weight:700;}
+  .pub-venue{font-size:0.92rem;color:var(--text-faint);font-style:italic;margin-top:3px;}
+  .pub-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:9px;}
+  .pub-meta a{font-size:0.76rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s;}
+  .pub-meta a:hover{border-color:var(--accent);}
+
+  /* experience timeline */
+  .timeline{position:relative;padding-left:36px;}
+  .timeline::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:var(--border);}
+  .tl-item{position:relative;padding-bottom:42px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:"";position:absolute;left:-36px;top:5px;width:14px;height:14px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 5px var(--bg);
+  }
+  .tl-title{font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.35;}
+  .tl-org{color:var(--accent);}
+  .tl-meta{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:0.82rem;color:var(--text-faint);margin-top:6px;letter-spacing:0.01em;
+  }
+  .tl-points{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:13px;}
+  .tl-points li{position:relative;padding-left:22px;color:var(--text-soft);font-size:1rem;line-height:1.55;}
+  .tl-points li::before{content:"\203A";position:absolute;left:2px;top:-1px;color:var(--accent);font-weight:700;font-size:1.05rem;}
+
+  /* featured work card (blue panel) */
+  .feature-card{
+    background:#2745c4;color:#fff;border-radius:22px;padding:46px 44px;
+    box-shadow:var(--shadow);
+  }
+  .feature-pills{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:22px;}
+  .feature-pill{
+    font-size:0.82rem;font-weight:500;padding:7px 18px;border-radius:100px;
+    border:1px solid rgba(255,255,255,0.45);color:#fff;white-space:nowrap;
+  }
+  .feature-card h3{
+    font-family:var(--serif);font-weight:500;font-size:clamp(1.7rem,3.4vw,2.4rem);
+    line-height:1.1;letter-spacing:-0.01em;margin-bottom:8px;
+  }
+  .feature-card .f-sub{color:rgba(255,255,255,0.78);font-size:1rem;margin-bottom:26px;}
+  /* PICTURE — swap .feature-pic for: <img src="featured.jpg" alt="..." style="width:100%;height:100%;object-fit:cover;border-radius:16px;"> */
+  .feature-pic{
+    height:300px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(150deg,#c3c9f0,#cfc1ee 55%,#e7d7f4);
+    display:grid;place-items:center;
+  }
+  .feature-pic img{width:100%;height:100%;object-fit:cover;display:block;}
+  .feature-pic .fp-svg{width:54px;height:54px;color:rgba(39,69,196,0.45);}
+  .feature-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:24px;}
+  .feature-links a{
+    font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+    color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.6);padding-bottom:2px;transition:border-color .2s,opacity .2s;
+  }
+  .feature-links a:hover{opacity:0.85;}
+
+  /* projects */
+  .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;}
+  .project{
+    border:1px solid var(--border);border-radius:14px;padding:24px;background:var(--surface);
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .project:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--accent);}
+  .project h3{font-family:var(--serif);font-weight:500;font-size:1.25rem;margin-bottom:10px;letter-spacing:-0.01em;}
+  .project p{font-size:0.96rem;color:var(--text-soft);}
+  .project .stat{font-size:0.76rem;font-weight:600;color:var(--accent);margin-top:14px;text-transform:uppercase;letter-spacing:0.08em;display:block;}
+
+  /* education */
+  .edu-item{
+    display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;
+    padding:24px 0;border-bottom:1px solid var(--border);
+  }
+  .edu-item:last-child{border-bottom:none;}
+  .edu-title{font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.35;}
+  .edu-org{color:var(--text-soft);margin-top:6px;}
+  .edu-note{color:var(--text-faint);font-size:0.95rem;margin-top:3px;}
+  .edu-year{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:0.85rem;color:var(--accent);text-align:right;white-space:nowrap;padding-top:5px;
+  }
+
+  /* teaching */
+  .course{padding:16px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:120px 1fr;gap:18px;}
+  .course:last-child{border-bottom:none;}
+  .course-code{font-size:0.85rem;font-weight:600;color:var(--accent);}
+  .course-name{font-family:var(--serif);font-weight:500;font-size:1.15rem;}
+  .course-detail{font-size:0.9rem;color:var(--text-faint);margin-top:2px;}
+
+  /* CV callout */
+  .cv-box{
+    border:1px solid var(--border-strong);border-radius:16px;padding:30px;
+    background:linear-gradient(135deg, var(--accent-wash), var(--surface));
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
+  }
+  .cv-box p{color:var(--text-soft);max-width:430px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;font-size:0.88rem;font-weight:600;
+    background:var(--accent);color:#fff;text-decoration:none;padding:14px 26px;border-radius:10px;
+    transition:background .2s, transform .15s;
+  }
+  :root[data-theme="dark"] .btn{color:#0d121b;}
+  .btn:hover{background:var(--accent-strong);transform:translateY(-2px);}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:24px;}
+  .contact-item .label{font-size:0.74rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:6px;}
+  .contact-item a, .contact-item span{color:var(--text);text-decoration:none;font-size:1.02rem;border-bottom:1px solid var(--border-strong);transition:border-color .2s,color .2s;}
+  .contact-item a:hover{border-color:var(--accent);color:var(--accent);}
+  /* social logo links */
+  .social-row{display:flex;flex-wrap:wrap;gap:18px;}
+  .social-link{display:inline-flex;align-items:center;gap:8px;border:none !important;color:var(--text);text-decoration:none;font-size:0.98rem;transition:color .2s;}
+  .social-link svg{width:20px;height:20px;flex:none;transition:transform .2s;}
+  .social-link span{border-bottom:1px solid var(--border-strong);transition:border-color .2s;}
+  .social-link:hover{color:var(--accent);}
+  .social-link:hover svg{transform:translateY(-1px);}
+  .social-link:hover span{border-color:var(--accent);}
+
+  footer{padding:40px 0 64px;border-top:1px solid var(--border);color:var(--text-faint);font-size:0.84rem;text-align:center;}
+  .footer-social{display:flex;justify-content:center;gap:22px;margin-bottom:18px;}
+  .footer-social a{color:var(--accent);text-decoration:none;font-weight:600;font-size:0.82rem;letter-spacing:0.04em;border-bottom:1px solid transparent;transition:border-color .2s;}
+  .footer-social a:hover{border-color:var(--accent);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:760px){
+    .hero-grid{grid-template-columns:1fr;gap:32px;}
+    .photo{width:170px;height:200px;justify-self:start;order:-1;}
+  }
+  @media(max-width:640px){
+    body{font-size:16px;}
+    .nav-links{
+      display:none;position:absolute;top:100%;left:0;right:0;
+      flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 0;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links li{padding:0 28px;}
+    .nav-links a{display:block;padding:12px 0;border-bottom:1px solid var(--border);}
+    .nav-links li:last-child a{border-bottom:none;}
+    .nav-toggle{display:grid;}
+    .sec-head .rule{display:none;}
+    .pub{grid-template-columns:1fr;gap:4px;}
+    .pub-year{padding-top:0;}
+    .course{grid-template-columns:1fr;gap:2px;}
+    .edu-item{grid-template-columns:1fr;gap:4px;}
+    .edu-year{text-align:left;padding-top:0;order:-1;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav>
+  <div class="nav-inner">
+    <!-- EDIT: short name / initials -->
+    <span class="nav-name">A.&nbsp;<span>Mishra</span></span>
+    <div class="nav-right">
+      <ul class="nav-links" id="navlinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#cv">CV</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <!-- THEME TOGGLE -->
+      <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="wrap reveal">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><span class="tick"></span>Researcher</p>
+        <!-- EDIT: your full name -->
         <h1>Ashutosh Mishra</h1>
-        <hr>
-        <div style="text-align: center;">
-            <p> ⚠ Website under construction ⚠ </p>
-            <p> Will hopefully be updated soon 🙂 </p>
+        <!-- EDIT: your one-line research focus -->
+        <p class="role">I work on the theory and numerical application of quantum optimal control to superconducting qubits.</p>
+        <!-- EDIT: your position and institution -->
+        <p class="affil">Doctoral researcher, Forschungszentum Jülich</p>
+        <div class="hero-links">
+          <!-- EDIT these links (or delete ones you don't use) -->
+          <a href="mailto:a.mishra@fz-juelich.de">Email</a>
+          <a href="https://scholar.google.com/citations?user=DP6-gYcAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+          <a href="https://github.com/Ashutosh-Mishra2" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://jugit.fz-juelich.de/a.mishra" target="_blank" rel="noopener">GitLab</a>
+          <a href="https://orcid.org/0009-0008-4432-0408" target="_blank" rel="noopener">ORCID</a>
+          <a href="www.linkedin.com/in/ashutosh-mishra-a3a851176" target="_blank" rel="noopener">LinkedIn</a>
         </div>
+      </div>
 
-    </body>
+      <!-- ============================================================ -->
+      <!--  PHOTO: replace the whole .photo block's inner SVG with:     -->
+      <!--  <img src="me.jpg" alt="Dr. Your Name">                      -->
+      <!--  (put me.jpg next to this file in your repo)                 -->
+      <!-- ============================================================ -->
+      <div class="photo">
+        <!-- <svg class="ph-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+          <circle cx="12" cy="9" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>
+        </svg> -->
+          <img src="Mishra Ashutosh-12.JPG" alt="Ashutosh Mishra" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">01</span><h2>About Me</h2><span class="rule"></span></div>
+    <!-- EDIT: 2-3 sentences about you, your research, and your approach -->
+    <p class="lead">I am a researcher in <strong>[field]</strong>, focused on [the central problem you tackle]. My work combines [method A] with [method B] to address [the practical or scientific question that motivates you].</p>
+    <p class="lead">Before joining [University], I completed my Ph.D. at [Institution], where I worked on [thesis topic] with [advisor]. I'm broadly interested in bridging [theory] and [application], and in building tools that other researchers can actually use.</p>
+    <div class="tags">
+      <!-- EDIT: your research keywords -->
+      <span class="tag">Machine Learning</span>
+      <span class="tag">Control Systems</span>
+      <span class="tag">Optimization</span>
+      <span class="tag">Robotics</span>
+      <span class="tag">Numerical Methods</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FEATURED WORK ===================== -->
+<section id="featured">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">FEATURED</span><h2>Highlighted Work</h2><span class="rule"></span></div>
+    <div class="feature-card">
+      <div class="feature-pills">
+        <!-- EDIT: a few short tags -->
+        <span class="feature-pill">2026</span>
+        <span class="feature-pill">Quantum optimal control theory</span>
+        <span class="feature-pill">On arXiv soon!</span>
+      </div>
+      <!-- EDIT: the title of the work you want to spotlight -->
+      <h3>Efficient analytical gradient evaluation for locally-interacting large multi-qubit platforms</h3>
+      <p class="f-sub">A one-line teaser describing why this project matters and what it shows.</p>
+
+      <!-- ============================================================ -->
+      <!--  PICTURE: replace the .feature-pic SVG with your image:      -->
+      <!--  <img src="featured.jpg" alt="Figure from the paper">        -->
+      <!--  (put featured.jpg next to this file in your repo)           -->
+      <!-- ============================================================ -->
+      <div class="feature-pic">
+        <svg class="fp-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+          <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/>
+        </svg>
+      </div>
+
+      <div class="feature-links">
+        <!-- EDIT or remove links -->
+        <a href="#">PDF ↗</a>
+        <a href="#">arXiv ↗</a>
+        <a href="#">Code ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Projects &amp; Research</h2><span class="rule"></span></div>
+    <div class="projects">
+      <!-- EDIT: one .project card per project -->
+      <div class="project">
+        <h3>Project Alpha</h3>
+        <p>A short description: the problem it addresses, your approach, and the outcome or current status.</p>
+        <span class="stat">Funded by [Agency] &middot; 2023–present</span>
+      </div>
+      <div class="project">
+        <h3>Open Toolkit</h3>
+        <p>An open-source library implementing [method]. Used by [N] research groups; describe adoption or impact here.</p>
+        <span class="stat">github.com/you/toolkit</span>
+      </div>
+      <div class="project">
+        <h3>Industry Collaboration</h3>
+        <p>Brief note on an applied project, dataset, or partnership and what it produced.</p>
+        <span class="stat">In collaboration with [Org]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERIENCE ===================== -->
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Experience</h2><span class="rule"></span></div>
+    <div class="timeline">
+
+      <!-- EDIT: duplicate a .tl-item block per role -->
+      <div class="tl-item">
+        <div class="tl-title">[Your Role / Title] — <span class="tl-org">[Institution / Lab]</span></div>
+        <div class="tl-meta">[Start] – [End] &middot; [City, Country] &middot; [collaboration / department]</div>
+        <ul class="tl-points">
+          <li>Describe a concrete contribution — the method you built, what it measured, and the conditions it addressed.</li>
+          <li>Quantify a result or outcome (datasets, benchmarks, improvements) where you can.</li>
+          <li>Note tools, pipelines, or analyses you implemented (languages, frameworks, statistical methods).</li>
+          <li>Mention talks given, papers in preparation, or students you mentored.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-title">[Earlier Role] — <span class="tl-org">[Institution]</span></div>
+        <div class="tl-meta">[Start] – [End] &middot; [City, Country]</div>
+        <ul class="tl-points">
+          <li>A short summary of your responsibilities and the impact of the work.</li>
+          <li>One more highlight worth calling out.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PUBLICATIONS ===================== -->
+<section id="publications">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Selected Publications</h2><span class="rule"></span></div>
+
+    <!-- EDIT: duplicate a .pub block per paper. Bold your own name in the authors line. -->
+    <div class="pub">
+      <div class="pub-year">2025</div>
+      <div>
+        <div class="pub-title">A Scalable Framework for [Your Method] in Large-Scale Systems</div>
+        <div class="pub-authors"><strong>Y. Name</strong>, A. Colleague, B. Coauthor</div>
+        <div class="pub-venue">Proceedings of the [Top Conference] (CONF '25)</div>
+        <div class="pub-meta"><a href="#">PDF</a><a href="#">arXiv</a><a href="#">Code</a><a href="#">BibTeX</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title">Rethinking [Concept]: Theory and Empirical Evidence</div>
+        <div class="pub-authors">C. Lead, <strong>Y. Name</strong>, D. Senior</div>
+        <div class="pub-venue">Journal of [Your Field], 42(3), 118–140</div>
+        <div class="pub-meta"><a href="#">PDF</a><a href="#">DOI</a><a href="#">Code</a></div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="pub-year">2023</div>
+      <div>
+        <div class="pub-title">Efficient Algorithms for [Problem] under Real-World Constraints</div>
+        <div class="pub-authors"><strong>Y. Name</strong>, E. Student</div>
+        <div class="pub-venue">IEEE Transactions on [Topic], 11(2)</div>
+        <div class="pub-meta"><a href="#">PDF</a><a href="#">arXiv</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EDUCATION ===================== -->
+<section id="education">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Education</h2><span class="rule"></span></div>
+
+    <!-- EDIT: one .edu-item block per degree / award -->
+    <div class="edu-item">
+      <div>
+        <div class="edu-title">[Ph.D., Your Field]</div>
+        <div class="edu-org">[Institution / Lab] / [University]</div>
+        <div class="edu-note">Advisor: [Prof. Name]</div>
+      </div>
+      <div class="edu-year">2022 – 2026 (expected)</div>
+    </div>
+
+    <div class="edu-item">
+      <div>
+        <div class="edu-title">[M.Sc., Your Field]</div>
+        <div class="edu-org">[University, City, Country] — [GPA / honors]</div>
+      </div>
+      <div class="edu-year">2019 – 2021</div>
+    </div>
+
+    <div class="edu-item">
+      <div>
+        <div class="edu-title">[B.Sc. (Hons.), Your Field]</div>
+        <div class="edu-org">[University, City, Country] — [GPA / honors]</div>
+      </div>
+      <div class="edu-year">2016 – 2019</div>
+    </div>
+
+    <div class="edu-item">
+      <div>
+        <div class="edu-title">[Fellowship / Scholarship]</div>
+        <div class="edu-org">[Program name and awarding body]</div>
+      </div>
+      <div class="edu-year">2022</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== TEACHING ===================== -->
+<section id="teaching">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Teaching</h2><span class="rule"></span></div>
+
+    <!-- EDIT: one .course block per course -->
+    <div class="course">
+      <div class="course-code">ENGR 401</div>
+      <div>
+        <div class="course-name">Introduction to [Subject]</div>
+        <div class="course-detail">Undergraduate &middot; Fall 2024, 2025 &middot; ~120 students</div>
+      </div>
+    </div>
+    <div class="course">
+      <div class="course-code">ENGR 612</div>
+      <div>
+        <div class="course-name">Advanced [Graduate Topic]</div>
+        <div class="course-detail">Graduate seminar &middot; Spring 2025</div>
+      </div>
+    </div>
+    <div class="course">
+      <div class="course-code">ENGR 150</div>
+      <div>
+        <div class="course-name">Foundations of [Field]</div>
+        <div class="course-detail">Undergraduate &middot; co-instructor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CV ===================== -->
+<section id="cv">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Curriculum Vitae</h2><span class="rule"></span></div>
+    <div class="cv-box">
+      <p>A full record of my education, appointments, awards, and complete publication list.</p>
+      <!-- EDIT: put cv.pdf next to this file in your repo -->
+      <a class="btn" href="cv.pdf" target="_blank" rel="noopener">Download CV (PDF) ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Contact</h2><span class="rule"></span></div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="label">Email</div>
+        <a href="mailto:you@university.edu">you@university.edu</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Office</div>
+        <span>Room 000, [Building], [University]</span>
+      </div>
+      <div class="contact-item">
+        <div class="label">Lab</div>
+        <a href="#">[Lab Name / website]</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Code</div>
+        <div class="social-row">
+          <a class="social-link" href="https://github.com/yourusername" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.2 3.44 9.6 8.21 11.16.6.11.82-.25.82-.56 0-.28-.01-1.02-.02-2-3.34.71-4.04-1.58-4.04-1.58-.55-1.37-1.34-1.74-1.34-1.74-1.09-.73.08-.72.08-.72 1.21.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.57-2.67-.3-5.47-1.31-5.47-5.83 0-1.29.47-2.34 1.24-3.17-.12-.3-.54-1.52.12-3.16 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 0 1 6 0c2.29-1.53 3.3-1.21 3.3-1.21.66 1.64.24 2.86.12 3.16.77.83 1.24 1.88 1.24 3.17 0 4.53-2.81 5.52-5.49 5.81.43.36.81 1.08.81 2.18 0 1.57-.01 2.84-.01 3.23 0 .31.21.68.83.56A12.02 12.02 0 0 0 24 12.29C24 5.78 18.63.5 12 .5Z"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a class="social-link" href="https://gitlab.com/yourusername" target="_blank" rel="noopener" aria-label="GitLab">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.955 13.587l-1.342-4.135-2.664-8.189a.455.455 0 0 0-.867 0L16.418 9.45H7.582L4.919 1.263a.455.455 0 0 0-.867 0L1.388 9.452.046 13.587a.924.924 0 0 0 .331 1.023L12 23.054l11.624-8.443a.924.924 0 0 0 .331-1.024"/></svg>
+            <span>GitLab</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-social">
+      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://gitlab.com/yourusername" target="_blank" rel="noopener">GitLab</a>
+      <a href="https://scholar.google.com/" target="_blank" rel="noopener">Scholar</a>
+      <a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a>
+    </div>
+    <span class="tick" style="width:28px;"></span>© <span id="year"></span> Your Name &middot; Built with care &middot; Hosted on GitHub Pages
+  </div>
+</footer>
+
+<script>
+  // ---------- THEME TOGGLE (persists on your live site via localStorage) ----------
+  (function initTheme(){
+    var saved;
+    try{ saved = localStorage.getItem('theme'); }catch(e){}
+    if(!saved){
+      saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', saved);
+  })();
+  function toggleTheme(){
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('theme', next); }catch(e){}
+  }
+
+  // ---------- SCROLL-SPY (top bar active dot) ----------
+  (function(){
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+    var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+    if(!sections.length) return;
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var marker = window.scrollY + window.innerHeight * 0.34;
+      var current = sections[0];
+      sections.forEach(function(sec){ if(sec.offsetTop <= marker) current = sec; });
+      links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + current.id); });
+    }
+    window.addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    update();
+  })();
 
 
+  // close mobile menu on link click
+  document.querySelectorAll('.nav-links a').forEach(function(a){
+    a.addEventListener('click', function(){ document.getElementById('navlinks').classList.remove('open'); });
+  });
+
+  // scroll reveal
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  window.addEventListener('load', function(){ document.querySelector('.hero .reveal') && document.querySelector('.hero .reveal').classList.add('in'); });
+</script>
+
+</body>
 </html>

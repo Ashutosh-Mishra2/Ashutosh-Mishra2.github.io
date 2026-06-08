@@ -352,7 +352,7 @@
   .shade-2{background:#D3D7F1;color:#1B27C4;}
   .shade-3{background:#B8BFE9;color:#1B27C4;}
   .shade-4{background:#5868D5;color:#fff;}
-  .shade-5{background:#1B27C4;color:#fff;}
+  .shade-5{background:#313AAD;color:#fff;}
   .b-label{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;opacity:.8;}
   .b-title{font-family:var(--serif);font-weight:500;font-size:1.4rem;line-height:1.18;letter-spacing:-0.01em;margin:10px 0 6px;}
   .span-big .b-title{font-size:1.85rem;}
@@ -429,15 +429,15 @@
   <div class="wrap reveal">
     <div class="sec-head"><span class="sec-num">01</span><h2>About Me</h2><span class="rule"></span></div>
     <!-- EDIT: 2-3 sentences about you, your research, and your approach -->
-    <p class="lead">Hi, I am a doctoral researcher at the <strong>Forschungszentum Jülich</strong>, focused on [the central problem you tackle]. My work combines [method A] with [method B] to address [the practical or scientific question that motivates you].</p>
-    <p class="lead">Before joining [University], I completed my Ph.D. at [Institution], where I worked on [thesis topic] with [advisor]. I'm broadly interested in bridging [theory] and [application], and in building tools that other researchers can actually use.</p>
+    <p class="lead">Hi, I am a doctoral researcher at the <strong>Forschungszentum Jülich</strong>, currently focused on theoretical and numerical development of quantum optimal control methods applicable towards multi-partite systems with large Hilbert space, and open quantum systems. My work develops a method for computing derivatitves of time-ordered propagators for systems with large Hilbert space.</p>
+    <p class="lead">Furthermore, I actively contribute towards the development of an open source python package ParaQeet aimed at streamlining the simulation and optimization workflow for quantum sytems. This combines analytical methods for computing gradients along with automatic differentiation, using the JAX framework, for ease of use.</p>
     <div class="tags">
       <!-- EDIT: your research keywords -->
       <span class="tag">Quantum control</span>
       <span class="tag">Classical simulation of quantum systems</span>
       <span class="tag">Optimization</span>
       <span class="tag">Numerical Methods</span>
-      <span class="tag">Programming</span>
+      <span class="tag">Automatic differentiation (JAX)</span>
     </div>
   </div>
 </section>
@@ -463,6 +463,8 @@
             <a href="#">Code ↗</a>
             <a href="#">arXiv ↗</a>
           </div> -->
+          <p class="b-desc" style="margin-top:18px;"></p>
+          <p class="b-desc">Demonstrates one order of magnitude speedup compared to current methods.</p>
         </div>
 
         <div class="bento-box shade-4 span-wide">
@@ -485,7 +487,10 @@
         <div class="bento-box shade-2">
           <span class="b-label">Paper</span>
           <h3 class="b-title">Demolition measurement protocol for transmon qubits</h3>
-          <div class="b-links"><a href="https://arxiv.org/abs/2502.18322">arXiv ↗</a></div>
+          <div class="b-links">
+            <a href="https://arxiv.org/abs/2502.18322">arXiv ↗</a>
+            <a href="https://jugit.fz-juelich.de/pgi-12-external/qfc/applications/demolition-measurement-code">Code ↗</a>
+          </div>
         </div>
 
         <!-- <div class="bento-box shade-1 span-full">

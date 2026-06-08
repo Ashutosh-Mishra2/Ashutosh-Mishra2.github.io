@@ -7,8 +7,8 @@
 <!-- ============================================================= -->
 <!--  EDIT: page title shown in the browser tab                    -->
 <!-- ============================================================= -->
-<title>Dr. Your Name — Research Profile</title>
-<meta name="description" content="Research profile of Dr. Your Name — [subfield] in [department], [University].">
+<title>Ashutosh Mishra — Research Profile</title>
+<meta name="description" content="Research profile of Ashutosh Mishra — FZJ.">
 
 <!-- Fonts: Fraunces (editorial display serif) + Hanken Grotesk (clean body) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -340,6 +340,31 @@
     .edu-item{grid-template-columns:1fr;gap:4px;}
     .edu-year{text-align:left;padding-top:0;order:-1;}
   }
+
+  @media(max-width:760px){ .bento{grid-template-columns:1fr 1fr;} .span-big{grid-row:span 1;} }
+  @media(max-width:640px){ .bento{grid-template-columns:1fr;} .span-big,.span-wide,.span-full{grid-column:span 1;} }
+
+  /* ===== Bento grid: Highlighted Work ===== */
+  .bento{ display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:minmax(180px,auto); gap:16px; }
+  .bento-box{ display:flex; flex-direction:column; padding:26px; border-radius:20px; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease; }
+  .bento-box:hover{ transform:translateY(-4px); box-shadow:0 22px 44px -22px rgba(27,39,196,0.45); }
+  .span-big {grid-column:span 2; grid-row:span 2;}
+  .span-wide{grid-column:span 2;}
+  .span-full{grid-column:1 / -1;}
+  .shade-1{background:#E6E8F7;color:#1B27C4;}
+  .shade-2{background:#D3D7F1;color:#1B27C4;}
+  .shade-3{background:#B8BFE9;color:#1B27C4;}
+  .shade-4{background:#5868D5;color:#fff;}
+  .shade-5{background:#1B27C4;color:#fff;}
+  .b-label{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;opacity:.8;}
+  .b-title{font-family:var(--serif);font-weight:500;font-size:1.4rem;line-height:1.18;letter-spacing:-0.01em;margin:10px 0 6px;}
+  .span-big .b-title{font-size:1.85rem;}
+  .b-desc{font-size:0.95rem;line-height:1.5;opacity:.85;margin:0;}
+  .b-media{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin-top:16px;display:block;background:linear-gradient(135deg,rgba(255,255,255,.30),rgba(255,255,255,.08));}
+  .b-links{margin-top:auto;display:flex;flex-wrap:wrap;gap:16px;padding-top:18px;}
+  .b-links a{color:inherit;text-decoration:none;font-size:0.78rem;font-weight:600;letter-spacing:0.04em;border-bottom:1px solid currentColor;padding-bottom:2px;transition:opacity .2s;}
+  .b-links a:hover{opacity:.65;}
+
 </style>
 </head>
 <body>
@@ -432,38 +457,53 @@
 <section id="featured">
   <div class="wrap reveal">
     <div class="sec-head"><span class="sec-num">FEATURED</span><h2>Highlighted Work</h2><span class="rule"></span></div>
-    <div class="feature-card">
-      <div class="feature-pills">
-        <!-- EDIT: a few short tags -->
-        <span class="feature-pill">2026</span>
-        <span class="feature-pill">Quantum optimal control theory</span>
-        <span class="feature-pill">On arXiv soon!</span>
-      </div>
-      <!-- EDIT: the title of the work you want to spotlight -->
-      <h3>Efficient analytical gradient evaluation for locally-interacting large multi-qubit platforms</h3>
-      <p class="f-sub">A one-line teaser describing why this project matters and what it shows.</p>
+      <div class="bento">
+        <div class="bento-box shade-5 span-big">
+          <span class="b-label">Featured Project</span>
+        <div class="feature-pills">
+          <span class="feature-pill">On arXiv soon!</span>
+          <span class="feature-pill">Quantum Optimal Control theory</span>
+        </div>
+        <h3 class="b-title">Efficient analytical gradient evaluation for locally-interacting large multi-qubit platforms</h3>
+          <p class="b-desc">One-line teaser describing why this matters.</p>
+          <!-- real image: replace this div with <img class="b-media" src="work-1.jpg" alt=""> -->
+          <div class="b-media"></div>
+          <div class="b-links">
+            <a href="#">PDF ↗</a>
+            <a href="#">Code ↗</a>
+            <a href="#">arXiv ↗</a>
+          </div>
+        </div>
 
-      <!-- ============================================================ -->
-      <!--  PICTURE: replace the .feature-pic SVG with your image:      -->
-      <!--  <img src="featured.jpg" alt="Figure from the paper">        -->
-      <!--  (put featured.jpg next to this file in your repo)           -->
-      <!-- ============================================================ -->
-      <div class="feature-pic">
-        <svg class="fp-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-          <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/>
-        </svg>
-      </div>
+        <div class="bento-box shade-4 span-wide">
+          <span class="b-label">Open Source</span>
+          <h3 class="b-title">Toolkit Name</h3>
+          <p class="b-desc">Short description of the library.</p>
+          <div class="b-links"><a href="#">GitHub ↗</a></div>
+        </div>
 
-      <div class="feature-links">
-        <!-- EDIT or remove links -->
-        <a href="#">PDF ↗</a>
-        <a href="#">arXiv ↗</a>
-        <a href="#">Code ↗</a>
-      </div>
+        <div class="bento-box shade-3">
+          <span class="b-label">Dataset</span>
+          <h3 class="b-title">Public Dataset</h3>
+          <div class="b-links"><a href="#">Download ↗</a></div>
+        </div>
+
+        <div class="bento-box shade-2">
+          <span class="b-label">Talk</span>
+          <h3 class="b-title">Invited Talk</h3>
+          <div class="b-links"><a href="#">Slides ↗</a></div>
+        </div>
+
+        <div class="bento-box shade-1 span-full">
+          <span class="b-label">Collaboration</span>
+          <h3 class="b-title">Industry Project</h3>
+          <p class="b-desc">What it produced and who it was with.</p>
+          <div class="b-links"><a href="#">Read more ↗</a></div>
+        </div>
+
+      </div> 
     </div>
-  </div>
 </section>
-
 <!-- ===================== PROJECTS ===================== -->
 <section id="projects">
   <div class="wrap reveal">
